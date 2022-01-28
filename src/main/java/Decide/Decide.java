@@ -1,3 +1,5 @@
+package Decide;
+
 public class Decide {
     private LaunchInterceptorConditions lics;
     private PreliminaryUnlockingMatrixCalculator pumCalculator;
@@ -11,45 +13,10 @@ public class Decide {
         this.fuvCalculator = fuvCalculator;
         this.launchCalculator = launchCalculator;
     }
-
-    public interface LaunchInterceptorConditions {
-        public void initialize(int numPoints, Point[] points, Parameters parameters);
-
-        public boolean LIC0();
-
-        public boolean LIC1();
-
-        public boolean LIC2();
-
-        public boolean LIC3();
-
-        public boolean LIC4();
-
-        public boolean LIC5();
-
-        public boolean LIC6();
-
-        public boolean LIC7();
-
-        public boolean LIC8();
-
-        public boolean LIC9();
-
-        public boolean LIC10();
-
-        public boolean LIC11();
-
-        public boolean LIC12();
-
-        public boolean LIC13();
-
-        public boolean LIC14();
-    }
-
     private boolean[] calculateConditionsMetVector() {
         return new boolean[] {
                 lics.LIC0(),
-                lics.LIC1(),
+                lics.LIC1(lics.parameters.RADIUS1),
                 lics.LIC2(),
                 lics.LIC3(),
                 lics.LIC4(),
@@ -66,17 +33,6 @@ public class Decide {
         };
     }
 
-    public interface PreliminaryUnlockingMatrixCalculator {
-        public boolean[][] calculate(LogicalConnectorOperator[][] lcm, boolean[] cmv);
-    }
-
-    public interface FinalUnlockingVectorCalculator {
-        public boolean[] calculate(boolean[][] pum, boolean[] puv);
-    }
-
-    public interface LaunchCalculator {
-        public boolean calculate(boolean[] fuv);
-    }
 
     public class Output {
         boolean launch;

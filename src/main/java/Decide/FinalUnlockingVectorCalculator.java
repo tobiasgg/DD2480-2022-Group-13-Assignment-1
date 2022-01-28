@@ -1,6 +1,7 @@
-public class FinalUnlockingVectorCalculator implements Decide.FinalUnlockingVectorCalculator {
+package Decide;
 
-    @Override
+public class FinalUnlockingVectorCalculator{
+
     public boolean[] calculate(boolean[][] pum, boolean[] puv) {
         // TODO Auto-generated method stub
         return null;
