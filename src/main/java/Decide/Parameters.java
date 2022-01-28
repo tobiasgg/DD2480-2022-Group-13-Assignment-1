@@ -1,3 +1,5 @@
+package Decide;
+
 public class Parameters {
     double LENGTH1; // Length in LICs 0 , 7 , 12
     double RADIUS1; // Radius in LICs 1 , 8 , 13

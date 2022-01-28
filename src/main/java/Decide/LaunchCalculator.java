@@ -1,6 +1,7 @@
-public class LaunchCalculator implements Decide.LaunchCalculator {
+package Decide;
 
-    @Override
+public class LaunchCalculator {
+
     public boolean calculate(boolean[] fuv) {
         // TODO Auto-generated method stub
         return false;
