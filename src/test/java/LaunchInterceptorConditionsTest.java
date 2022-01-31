@@ -131,4 +131,65 @@ public class LaunchInterceptorConditionsTest {
         p.QUADS = 0;
         assertThrows(AssertionError.class, () -> LIC.LIC4());
     }
+
+    @Test
+    void LIC9_test() {
+        LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
+        int numPoints = 7;
+        Point[] points = new Point[7];
+
+        points[0] = new Point(0, 3);
+        points[1] = new Point(1, 0);
+        points[2] = new Point(2, 0);
+        points[3] = new Point(0, 0);
+        points[4] = new Point(4, 0);
+        points[5] = new Point(5, 0);
+        points[6] = new Point(3, 0);
+        Parameters p = new Parameters();
+        p.C_PTS = 2;
+        p.D_PTS = 2;
+        p.EPSILON = 1;
+        LIC.initialize(numPoints, points, p);
+        assertTrue(LIC.LIC9());
+
+        points[0] = new Point(0, 0);
+        points[1] = new Point(1, 0);
+        points[2] = new Point(2, 0);
+        points[3] = new Point(3, 0);
+        points[4] = new Point(4, 0);
+        points[5] = new Point(5, 0);
+        points[6] = new Point(0, 0);
+        p.C_PTS = 2;
+        p.D_PTS = 2;
+        p.EPSILON = 1;
+        assertTrue(LIC.LIC9());
+
+        points[0] = new Point(1, 0);
+        points[1] = new Point(2, 0);
+        points[2] = new Point(3, 0);
+        points[3] = new Point(2, 0);
+        points[4] = new Point(4, 0);
+        points[5] = new Point(5, 0);
+        points[6] = new Point(2, 0);
+        p.C_PTS = 2;
+        p.D_PTS = 2;
+        p.EPSILON = 0;
+        assertFalse(LIC.LIC9());
+
+        points[0] = new Point(1, 0);
+        points[1] = new Point(2, 0);
+        points[2] = new Point(3, 0);
+        points[3] = new Point(1, 0);
+        points[4] = new Point(4, 0);
+        points[5] = new Point(5, 0);
+        points[6] = new Point(2, 0);
+        p.C_PTS = 2;
+        p.D_PTS = 2;
+        p.EPSILON = 0;
+        assertFalse(LIC.LIC9());
+
+        p.C_PTS = 0;
+        p.D_PTS = 0;
+        assertThrows(AssertionError.class, () -> LIC.LIC9());
+    }
 }

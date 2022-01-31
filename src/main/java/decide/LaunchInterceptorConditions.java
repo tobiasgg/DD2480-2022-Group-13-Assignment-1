@@ -56,6 +56,27 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
     }
 
     /**
+     * Calculates the angle formed by p1, p2 and p3,
+     *  where p2 is the vertex
+     */
+    public double angle(Point p1, Point p2, Point p3) {
+        double p12 = distance(p1, p2);
+        double p23 = distance(p2, p3);
+        double p13 = distance(p1, p3);
+        // https://www.mathsisfun.com/algebra/trig-cosine-law.html
+        return Math.acos((p12*p12 + p23*p23 - p13*p13) / (2*p12*p23));
+    }
+
+    public boolean angleOutOfRange(Point p1, Point p2, Point p3, double EPSILON) {
+        assert EPSILON >= 0 && EPSILON < Math.PI;
+        if (pointsEqual(p1, p2) || pointsEqual(p2, p3)) {
+            return false;
+        }
+        return angle(p1, p2, p3) < Math.PI - EPSILON || angle(p1, p2, p3) > Math.PI + EPSILON;
+    }
+
+
+    /**
      * Loops over all sets of two consecutive data points and checks if LIC0 is
      * satisfied.
      * 
@@ -143,6 +164,12 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     * Loop over all sets of Q_PTS consecutive data points
+     *
+     * @return true if at least one of these sets of points
+     * lie in more than QUADS quadrants
+     */
     public boolean LIC4() {
         int Q_PTS = parameters.Q_PTS;
         int QUADS = parameters.QUADS;
@@ -201,8 +228,30 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     * Loop over all sets of three data points
+     * separated by C_PTS and D_PTS consecutive data points
+     *
+     * @return true if at least one of these sets of points
+     * form an angle greater than (PI − EPSILON) or less than (PI + EPSILON)
+     */
     public boolean LIC9() {
-        // TODO Auto-generated method stub
+        int C_PTS = parameters.C_PTS;
+        int D_PTS = parameters.D_PTS;
+        double EPSILON = parameters.EPSILON;
+        assert C_PTS >= 1 && D_PTS >= 1: "C_PTS and D_PTS must be positive integers, but are " + C_PTS + " and " + D_PTS;
+        assert C_PTS + D_PTS <= numPoints - 3: "C_PTS + D_PTS must be less than or equal to numPoints - 3";
+        if (numPoints < 5) {
+            return false;
+        }
+        for (int i = 0; i <= numPoints - C_PTS - D_PTS - 3; i++) {
+            Point p1 = points[i];
+            Point p2 = points[i + C_PTS + 1];
+            Point p3 = points[i + C_PTS + D_PTS + 2];
+            if (angleOutOfRange(p1, p2, p3, EPSILON)) {
+                return true;
+            }
+        }
         return false;
     }
 
