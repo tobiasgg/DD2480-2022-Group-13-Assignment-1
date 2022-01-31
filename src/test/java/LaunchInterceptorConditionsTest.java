@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import main.java.decide.*;
+import decide.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,6 +1,4 @@
-package main.java.decide;
-
-import main.java.decide.Parameters;
+package decide;
 
 public class LaunchInterceptorConditions implements Decide.LaunchInterceptorConditions {
     public Parameters parameters;
