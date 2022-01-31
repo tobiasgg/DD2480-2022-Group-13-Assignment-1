@@ -36,10 +36,8 @@ public class LaunchInterceptorConditions {
     }
 
     /**
-     * Loop over all sets of three consecutive data points
-     * @param RADIUS1
-     * @return true if at least one set can not be contained
-     * within or on a circle of radius RADIUS1 (0 ≤ RADIUS1).
+     * Loop over all sets of three consecutive data points and check if LIC1 is satisfied.
+     * @return true if at least one set can not be contained within or on a circle of radius RADIUS1 (0 ≤ RADIUS1).
      */
     public boolean LIC1(double RADIUS1) {
         if (numPoints < 3) {
@@ -69,45 +67,11 @@ public class LaunchInterceptorConditions {
         // TODO Auto-generated method stub
         return false;
     }
-    /**
-     * Loop over all sets of Q_PTS consecutive data points
-     * @param Q_PTS
-     * @param QUADS
-     * @return true if at least on set of points lie in more than QUADS quadrants
-     */
-    public boolean LIC4(int Q_PTS, int QUADS) {
-        assert Q_PTS >= 2 && Q_PTS <= numPoints;
-        assert QUADS >= 1 && QUADS <= 3;
-        for (int i = 0; i <= numPoints - Q_PTS; i++) {
-            boolean[] quadrants = new boolean[4];
-            for (int j = 0; j < Q_PTS; j++) {
-                // Set true if point lies in quadrant 1
-                if (points[i+j].X >= 0 && points[i+j].Y >= 0) {
-                    quadrants[0] = true;
-                }
-                // Set true if point lies in quadrant 2
-                if (points[i+j].X < 0 && points[i+j].Y >= 0) {
-                    quadrants[1] = true;
-                }
-                // Set true if point lies in quadrant 3
-                if (points[i+j].X <= 0 && points[i+j].Y < 0) {
-                    quadrants[2] = true;
-                }
-                // Set true if point lies in quadrant 4
-                if (points[i+j].X > 0 && points[i+j].Y < 0) {
-                    quadrants[3] = true;
-                }
-            }
-            int quadrantsCount = 0;
-            for (boolean quadrant : quadrants) {
-                if (quadrant) {
-                    quadrantsCount++;
-                }
-            }
-            if (quadrantsCount > QUADS) {
-                return true;
-            }
-        }
+
+    public boolean LIC4() {
+        // TODO Auto-generated method stub
+        return false;
+    }
     
     public boolean LIC5() {
         // TODO Auto-generated method stub
