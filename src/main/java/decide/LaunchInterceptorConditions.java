@@ -311,7 +311,7 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         if (numPoints < 5) {
             return false;
         }
-        for (int i = 0; i <= numPoints - C_PTS - D_PTS - 3; i++) {
+        for (int i = 0; i < numPoints - C_PTS - D_PTS - 2; i++) {
             Point p1 = points[i];
             Point p2 = points[i + C_PTS + 1];
             Point p3 = points[i + C_PTS + D_PTS + 2];
@@ -327,8 +327,25 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     * Loop over all sets of two data points separated by G_PTS points
+     * @return true if at least one of these sets of points,
+     * Point 1 and Point 2, such that Point2.X - Point1.X < 0
+     */
     public boolean LIC11() {
-        // TODO Auto-generated method stub
+        int G_PTS = parameters.G_PTS;
+        assert G_PTS >= 1: "G_PTS must be a positive integer, but is " + G_PTS;
+        assert G_PTS <= numPoints - 2: "G_PTS must be less than or equal to numPoints - 2";
+        if (numPoints < 3) {
+            return false;
+        }
+        for (int i = 0; i < numPoints - G_PTS - 1; i++) {
+            Point p1 = points[i];
+            Point p2 = points[i + G_PTS + 1];
+            if (p2.X - p1.X < 0) {
+                return true;
+            }
+        }
         return false;
     }
 
