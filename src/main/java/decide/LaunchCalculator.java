@@ -1,6 +1,6 @@
-package Decide;
+package main.java.decide;
 
-public class LaunchCalculator {
+public class LaunchCalculator implements Decide.LaunchCalculator {
 
     public boolean calculate(boolean[] fuv) {
         // TODO Auto-generated method stub
