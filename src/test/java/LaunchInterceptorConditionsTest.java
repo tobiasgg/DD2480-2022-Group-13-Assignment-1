@@ -306,6 +306,35 @@ public class LaunchInterceptorConditionsTest {
 
     @Test
     void LIC13_test(){
+        LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
+        int numPoints = 5;
+        Point[] points = new Point[5];
+        points[0] = new Point(0, 0);
+        points[1] = new Point(1, 0);
+        points[2] = new Point(-1, 0);
+        points[3] = new Point(0, -1);
+        points[4] = new Point(0, 1);
+        Parameters p = new Parameters();
+        LIC.initialize(numPoints, points, p);
+
+        p.A_PTS = 0;
+        p.B_PTS = 0;
+
+        p.RADIUS1 = 0.9;
+        p.RADIUS2 = 1;
+        assertTrue(LIC.LIC13());
+
+        p.RADIUS1 = 1.1;
+        p.RADIUS2 = 0.9;
+        assertFalse(LIC.LIC13());
+
+        p.RADIUS1 = 1.0;
+        p.RADIUS2 = 1.0;
+        assertFalse(LIC.LIC13());
+
+        p.RADIUS1 = -1;
+        p.RADIUS2 = -1;
+        assertThrows(AssertionError.class, () -> LIC.LIC13());
 
     }
 

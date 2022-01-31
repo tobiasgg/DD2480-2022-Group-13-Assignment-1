@@ -85,6 +85,42 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         double proj_factor = dot_prod(p1, p2)/(Math.pow(length(p2),2));
         return new Point(proj_factor*p2.X, proj_factor*p2.Y);
     }
+
+    /**
+     * @return true if p1, p2, and p3 can be contained with in a circle of radius r
+     * https://math.stackexchange.com/questions/2234478/given-a-set-of-3-2d-points-how-to-find-if-they-lie-within-a-circle-of-a-given-r
+     */
+    public boolean pointsContainedInCircle(Point p1, Point p2, Point p3, double r) {
+        double side12 = distance(p1, p2);
+        double side23 = distance(p2, p3);
+        double side13 = distance(p1, p3);
+        // if any of the three sides > 2 * r,
+        // then the points cannot be contained in a circle of radius r
+        if (side12 > 2 * r || side23 > 2 * r || side13 > 2 * r) {
+            return false;
+        }
+        // if they form an obtuse or a right triangle,
+        // the smallest circle enclosing it would have a diameter of the longest edge
+        if (side12*side12 + side13*side13 <= side23*side23) {
+            return 2 * r >= side23;
+        }
+        else if (side23*side23 + side13*side13 <= side12*side12) {
+            return 2 * r >= side12;
+        }
+        else if (side12*side12 + side23*side23 <= side13*side13) {
+            return 2 * r >= side13;
+        }
+        // if they form an acute triangle,
+        // calculate the circumcircle radius
+        // https://en.wikipedia.org/wiki/Circumscribed_circle
+        else {
+            double d = 2*(p1.X*(p2.Y - p3.Y) + p2.X*(p3.Y - p1.Y) + p3.X*(p1.Y - p2.Y));
+            double ux = 1/d*( length(p1)*(p2.Y - p3.Y) + length(p2)*(p3.Y-p1.Y) + length(p3)*(p1.Y-p2.Y) );
+            double uy = 1/d*( length(p1)*(p3.X - p2.X) + length(p2)*(p1.X-p3.X) + length(p3)*(p2.X-p1.X) );
+            return distance(new Point(ux, uy), p1) <= r;
+        }
+    }
+
     /**
      * Loops over all sets of two consecutive data points and checks if LIC0 is
      * satisfied.
@@ -118,15 +154,9 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
             return false;
         }
         assert RADIUS1 >= 0;
-        double[] distances = new double[3];
         for (int i = 0; i < numPoints - 2; i++) {
-            distances[0] = distance(points[i], points[i + 1]);
-            distances[1] = distance(points[i + 1], points[i + 2]);
-            distances[2] = distance(points[i], points[i + 2]);
-            for (double distance : distances) {
-                if (distance / 2 > RADIUS1) {
-                    return true;
-                }
+            if (!pointsContainedInCircle(points[i], points[i + 1], points[i + 2], RADIUS1)) {
+                return true;
             }
         }
         return false;
@@ -354,9 +384,36 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     * Loop over all sets of three data points separated by A_PTS and B_PTS consecutive points
+     * @return true if at least one of these sets of points cannot be contained within or on a circle
+     * of radius RADIUS1, and at least one of these sets of points can be contained within or on a circle
+     * of radius RADIUS2.
+     */
     public boolean LIC13() {
-        // TODO Auto-generated method stub
-        return false;
+        int A_PTS = parameters.A_PTS;
+        int B_PTS = parameters.B_PTS;
+        double RADIUS1 = parameters.RADIUS1;
+        double RADIUS2 = parameters.RADIUS2;
+        assert RADIUS1 >= 0: "RADIUS1 must be non-negative, but is " + RADIUS1;
+        assert RADIUS2 >= 0: "RADIUS2 must be non-negative, but is " + RADIUS2;
+        if (numPoints < 5) {
+            return false;
+        }
+        boolean flag1 = false;
+        boolean flag2 = false;
+        for (int i = 0; i < numPoints - A_PTS - B_PTS - 2; i++) {
+            Point p1 = points[i];
+            Point p2 = points[i + A_PTS + 1];
+            Point p3 = points[i + A_PTS + B_PTS + 2];
+            if (!pointsContainedInCircle(p1, p2, p3, RADIUS1)) {
+                flag1 = true;
+            }
+            if (pointsContainedInCircle(p1, p2, p3, RADIUS2)) {
+                flag2 = true;
+            }
+        }
+        return flag1 && flag2;
     }
 
     public boolean LIC14() {
