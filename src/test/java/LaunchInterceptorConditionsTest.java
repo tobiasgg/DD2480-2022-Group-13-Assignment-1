@@ -44,24 +44,5 @@ public class LaunchInterceptorConditionsTest {
         points[1] = new Point(1, 0);
         points[2] = new Point(-1, 0);
         assertFalse(LIC.LIC1(1.0));
-        assertThrows(AssertionError.class, () -> LIC.LIC1(-1.0));
-    }
-
-    @Test
-    void LIC4_test() {
-        LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
-        int numPoints = 3;
-        Point[] points = new Point[3];
-        points[0] = new Point(0, 0);
-        points[1] = new Point(1, 0);
-        points[2] = new Point(-1, 0);
-        LIC.numPoints = numPoints;
-        LIC.points = points;
-        assertTrue(LIC.LIC4(2, 1));
-        points[0] = new Point(0, 0);
-        points[1] = new Point(1, 0);
-        points[2] = new Point(-1, 0);
-        assertFalse(LIC.LIC4(2, 3));
-        assertThrows(AssertionError.class, () -> LIC.LIC4(1, 0));
     }
 }

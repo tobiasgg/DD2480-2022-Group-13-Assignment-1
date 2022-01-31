@@ -19,7 +19,7 @@ public class Decide {
                 lics.LIC1(lics.parameters.RADIUS1),
                 lics.LIC2(),
                 lics.LIC3(),
-                lics.LIC4(lics.parameters.Q_PTS, lics.parameters.QUADS),
+                lics.LIC4(),
                 lics.LIC5(),
                 lics.LIC6(),
                 lics.LIC7(),
