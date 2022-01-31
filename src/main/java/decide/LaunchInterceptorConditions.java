@@ -240,8 +240,27 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     * Loops over all sets of two data points separated by K_PTS points and checks if LIC7 is
+     * satisfied.
+     * @return true if there exists at least one set of two data points
+     * separated by exactly K_PTS consecutive intervening points that are
+     * a distance greater than the length, LENGTH1, apart.
+     * The condition is not met when NUMPOINTS < 3.
+     *
+     * 1 ≤ K_PTS ≤ (NUMPOINTS − 2)
+     */
     public boolean LIC7() {
-        // TODO Auto-generated method stub
+        int K_PTS = parameters.K_PTS;
+        double LENGTH1 = parameters.LENGTH1;
+        if (numPoints < 3) return false;
+        assert K_PTS >= 1 && K_PTS <= numPoints - 2;
+        assert LENGTH1 >= 0;
+        for (int i = 0; i < numPoints - (K_PTS + 1); i++) {
+            Point p1 = points[i];
+            Point p2 = points[i + K_PTS + 1];
+            if (distance(p1, p2) > LENGTH1) return true;
+        }
         return false;
     }
 
