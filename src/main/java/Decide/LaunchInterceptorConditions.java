@@ -65,8 +65,34 @@ public class LaunchInterceptorConditions {
         return false;
     }
 
-    public boolean LIC3() {
-        // TODO Auto-generated method stub
+    /**
+     * 
+     * @param X
+     * @param Y
+     * @param numpoints
+     * @param area1
+     * @return
+     */
+    public boolean LIC3(double area1) {
+        double x1, y1, x2, y2, x3, y3, area;
+        assert area1 > 0;
+
+        for (int i = 0; i < numPoints - 2; i++){
+            x1 = points[i].X;
+            y1 = points[i].Y;
+            x2 = points[i + 1].X;
+            y2 = points[i + 1].Y;
+            x3 = points[i + 2].X;
+            y3 = points[i + 2].Y;
+    
+            //Given 3 vertices of a triangle, area is calculated as such:
+            area = Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 *(y1 - y2)));
+            area = area / 2;
+    
+            if(area > area1){
+                return true;
+            }
+        }
         return false;
     }
     /**
@@ -108,9 +134,18 @@ public class LaunchInterceptorConditions {
                 return true;
             }
         }
-    
+        return false;
+    }
+    /**
+     * @return true if there exists at least one set of two consecutive data points, 
+     *  (X[i],Y[i]) and (X[j],Y[j]), such that X[j] - X[i] < 0. (where i = j-1).
+     */
     public boolean LIC5() {
-        // TODO Auto-generated method stub
+        for(int i = 0; i < numPoints - 1; i++){
+            if((points[i + 1].X - points[i].X) > 0 ){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -124,8 +159,25 @@ public class LaunchInterceptorConditions {
         return false;
     }
     
-    public boolean LIC8() {
-        // TODO Auto-generated method stub
+    public boolean LIC8(double RADIUS1, int A_PTS, int B_PTS) {
+        
+        assert A_PTS >= 1 && B_PTS >= 1;
+        assert RADIUS1 >= 0;
+
+        double[] dist = new double[3];
+        if(numPoints >= 5){
+            for(int i = 0; i < numPoints - A_PTS - B_PTS - 2; i++){
+                dist[i] = distance(points[i], points[i + A_PTS + 1]);
+                dist[i + 1] = distance(points[i + A_PTS + 1], points[i + A_PTS + B_PTS + 2]);
+                dist[i + 2] = distance(points[i], points[i + A_PTS + B_PTS + 2]);
+
+                for(double dists : dist) {
+                    if(dists / 2 > RADIUS1){
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
     
@@ -134,8 +186,29 @@ public class LaunchInterceptorConditions {
         return false;
     }
 
-    public boolean LIC10() {
-        // TODO Auto-generated method stub
+    public boolean LIC10(double AREA1, int E_PTS, int F_PTS) {
+        
+        assert E_PTS >= 1 && F_PTS >= 1;
+        assert AREA1 >= 0;
+
+        double x1, y1, x2, y2, x3, y3, area;
+        if(numPoints >= 5){
+            for(int i = 0; i < numPoints - E_PTS - F_PTS - 2; i++){
+                x1 = points[i].X;
+                y1 = points[i].Y;
+                x2 = points[i + E_PTS + 1].X;
+                y2 = points[i + E_PTS + 1].Y;
+                x3 = points[i + E_PTS + F_PTS + 2].X;
+                y3 = points[i + E_PTS + F_PTS + 2].Y;
+
+                area = Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 *(y1 - y2)));
+                area = area / 2;
+
+                if(area > AREA1){
+                    return true;
+                }
+            }
+        }
         return false;
     }
     
@@ -154,8 +227,37 @@ public class LaunchInterceptorConditions {
         return false;
     }
 
-    public boolean LIC14() {
-        // TODO Auto-generated method stub
+    public boolean LIC14(double AREA1, double AREA2, int E_PTS, int F_PTS) {
+
+        assert AREA2 >= 0;
+
+        boolean first = false;
+        boolean second = false;
+
+        double x1, y1, x2, y2, x3, y3, area;
+        if(numPoints >= 5){
+            for(int i = 0; i < numPoints - E_PTS - F_PTS - 2; i++){
+                x1 = points[i].X;
+                y1 = points[i].Y;
+                x2 = points[i + E_PTS + 1].X;
+                y2 = points[i + E_PTS + 1].Y;
+                x3 = points[i + E_PTS + F_PTS + 2].X;
+                y3 = points[i + E_PTS + F_PTS + 2].Y;
+
+                area = Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 *(y1 - y2)));
+                area = area / 2;
+
+                if(area > AREA1){
+                    first = true;
+                }
+                if(area < AREA2){
+                    second = true;
+                }
+                if(first == true && second == true){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }
