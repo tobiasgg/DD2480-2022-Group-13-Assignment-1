@@ -21,8 +21,17 @@ public class LaunchInterceptorConditions {
         return Math.sqrt(x*x + y*y);
     }
 
-    public boolean LIC0() {
-        // TODO Auto-generated method stub
+    /**
+     * Loops over all sets of two consecutive data points and checks if LIC0 is satisfied.
+     * @return true if at least one set is separated by a distance of more than LENGTH1 (0 ≤ LENGTH1)
+     */
+    public boolean LIC0(double LENGTH1) {
+        for (int i = 0; i < numPoints - 1; i++) {
+            double dist = distance(points[i], points[i + 1]);
+            if (dist > LENGTH1){
+                return true;
+            }
+        }
         return false;
     }
 
