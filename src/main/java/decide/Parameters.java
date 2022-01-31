@@ -1,4 +1,4 @@
-package main.java.decide;
+package decide;
 
 public class Parameters {
     public double LENGTH1; // Length in LICs 0 , 7 , 12

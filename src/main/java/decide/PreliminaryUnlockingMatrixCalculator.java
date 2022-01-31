@@ -1,4 +1,4 @@
-package main.java.decide;
+package decide;
 
 public class PreliminaryUnlockingMatrixCalculator implements Decide.PreliminaryUnlockingMatrixCalculator {
 
