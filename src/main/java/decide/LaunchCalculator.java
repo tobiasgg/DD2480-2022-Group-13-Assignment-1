@@ -1,4 +1,4 @@
-package Decide;
+package main.java.decide;
 
 public class LaunchCalculator implements Decide.LaunchCalculator {
 

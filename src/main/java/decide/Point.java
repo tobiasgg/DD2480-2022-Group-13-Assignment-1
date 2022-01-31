@@ -1,4 +1,4 @@
-package Decide;
+package main.java.decide;
 
 public class Point {
     double X;
@@ -9,7 +9,7 @@ public class Point {
         this.Y = 0;
     }
 
-    public Point (double x, double y) {
+    public Point(double x, double y) {
         this.X = x;
         this.Y = y;
     }
@@ -19,5 +19,3 @@ public class Point {
         this.Y = y;
     }
 }
-
-

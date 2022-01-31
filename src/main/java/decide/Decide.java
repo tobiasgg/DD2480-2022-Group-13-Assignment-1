@@ -1,4 +1,4 @@
-package Decide;
+package main.java.decide;
 
 public class Decide {
     private LaunchInterceptorConditions lics;
