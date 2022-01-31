@@ -17,7 +17,7 @@ public class Decide {
         return new boolean[] {
                 lics.LIC0(lics.parameters.LENGTH1),
                 lics.LIC1(lics.parameters.RADIUS1),
-                lics.LIC2(),
+                lics.LIC2(lics.parameters.EPSILON),
                 lics.LIC3(),
                 lics.LIC4(),
                 lics.LIC5(),

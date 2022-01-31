@@ -22,6 +22,36 @@ public class LaunchInterceptorConditions {
     }
 
     /**
+     * Calculates the length of Point p (if you think of it as a 2d-vector).
+     * @param p: Point
+     * @return the length of p
+     * This can potentially be refactored to the Point class.
+     */
+    public double length(Point p) {
+        return Math.sqrt(p.X*p.X + p.Y*p.Y);
+    }
+
+    /**
+     * Checks if two points coincide
+     * @param p1: First point
+     * @param p2: Second point
+     * @return true if both the x-value and the y-value of p1 is equal to the x-value and the y-value of p2
+     */
+    public boolean pointsEqual(Point p1, Point p2) {
+        return p1.X == p2.X && p1.Y == p2.Y;
+    }
+
+    /**
+     * Calculates dot product of two points
+     * @param p1: First Point
+     * @param p2: Second point
+     * @return the dot product of p1 and p2
+     */
+    public double dot_prod(Point p1, Point p2) {
+        return p1.X * p2.X + p1.Y * p2.Y;
+    }
+
+    /**
      * Loops over all sets of two consecutive data points and checks if LIC0 is satisfied.
      * @return true if at least one set is separated by a distance of more than LENGTH1 (0 ≤ LENGTH1)
      */
@@ -54,8 +84,30 @@ public class LaunchInterceptorConditions {
         return false;
     }
 
-    public boolean LIC2() {
-        // TODO Auto-generated method stub
+    /**
+     * Loops over all sets of three consecutive data points and checks if LIC2 is satisfied.
+     * @return true if there exists at least one set of three consecutive data points which form an
+     * angle such that: angle < (PI − EPSILON) or angle > (PI + EPSILON)
+     *
+     * The second of the three consecutive points is always the vertex of the angle.
+     * If either the first point or the last point (or both) coincides with the vertex,
+     * the angle is undefined and the LIC is not satisfied by those three points.
+     * (0 ≤ EPSILON < PI)
+     */
+    public boolean LIC2(double EPSILON) {
+        assert EPSILON >= 0 && EPSILON <= Math.PI;
+        for (int i = 0; i < numPoints - 2; i++) {
+            // Checking that the first and last points are not equal to the second
+            if (!pointsEqual(points[i], points[i + 1]) && !pointsEqual(points[i+1], points[i+2])) {
+                // The "arms" of the angle
+                Point arm1 = new Point(points[i].X - points[i+1].X, points[i].Y - points[i+1].Y);
+                Point arm2 = new Point(points[i+2].X - points[i+1].X, points[i+2].Y - points[i+1].Y);
+                // Calculation of angle using dot-product formula
+                // v1 * v2 = ||v1||*||v2||*cos(theta)
+                double angle = Math.acos(dot_prod(arm1, arm2)/(length(arm1)*length(arm2)));
+                if (angle < Math.PI - EPSILON || angle > Math.PI + EPSILON) return true;
+            }
+        }
         return false;
     }
 
