@@ -75,7 +75,16 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return angle(p1, p2, p3) < Math.PI - EPSILON || angle(p1, p2, p3) > Math.PI + EPSILON;
     }
 
-
+    /**
+     * Calculates the projection of one point on another (if you think of them as 2d-vectors)
+     * @param p1: First point (to be projected)
+     * @param p2: Second point (to be projected on)
+     * @return the projection of p1 on point p2
+     */
+    public Point projection(Point p1, Point p2) {
+        double proj_factor = dot_prod(p1, p2)/(Math.pow(length(p2),2));
+        return new Point(proj_factor*p2.X, proj_factor*p2.Y);
+    }
     /**
      * Loops over all sets of two consecutive data points and checks if LIC0 is
      * satisfied.
@@ -213,13 +222,71 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     * Loops over all sets of N_PTS consecutive data points and checks if LIC6 is satisfied.
+     * @return true if there exists at least one set of N PTS consecutive data points
+     * such that at least one of the points lies a distance greater than DIST from the
+     * line joining the first and last of these N PTS points. If the first and last points of these
+     * N PTS are identical, then the calculated distance to compare with DIST will be the distance
+     * from the coincident point to all other points of the N PTS consecutive points.
+     * The condition is not met when NUMPOINTS < 3.
+     *
+     * (3 ≤ N_PTS ≤ NUMPOINTS), (0 ≤ DIST)
+     */
     public boolean LIC6() {
-        // TODO Auto-generated method stub
+        int N_PTS = parameters.N_PTS;
+        double DIST = parameters.DIST;
+        // If numPoints < 3 the condition is not met
+        if (numPoints < 3) {
+            return false;
+        }
+        assert N_PTS >= 3 && N_PTS <= numPoints;
+        assert DIST >= 0;
+        for (int i = 0; i < numPoints - (N_PTS - 1); i++) {
+            Point[] currentPoints = new Point[N_PTS];
+            for (int j = 0; j < N_PTS; j++) {
+                currentPoints[j] = points[i + j];
+            }
+            // Special case when first and last point coincide
+            if (pointsEqual(currentPoints[0], currentPoints[N_PTS - 1])) {
+                for (int j = 1; j < N_PTS - 1; j++) {
+                    double dist = distance(currentPoints[0], currentPoints[j]);
+                    if (dist > DIST) return true;
+                }
+            }
+            // General case
+            else {
+                Point line = new Point(currentPoints[N_PTS - 1].X - currentPoints[0].X, currentPoints[N_PTS - 1].Y - currentPoints[0].Y);
+                for (int j = 0; j < N_PTS; j++) {
+                    // Distance between point and its projection on the line is the shortest distance.
+                    if (distance(currentPoints[j], projection(currentPoints[j], line)) > DIST) return true;
+                }
+            }
+        }
         return false;
     }
 
+    /**
+     * Loops over all sets of two data points separated by K_PTS points and checks if LIC7 is
+     * satisfied.
+     * @return true if there exists at least one set of two data points
+     * separated by exactly K_PTS consecutive intervening points that are
+     * a distance greater than the length, LENGTH1, apart.
+     * The condition is not met when NUMPOINTS < 3.
+     *
+     * 1 ≤ K_PTS ≤ (NUMPOINTS − 2)
+     */
     public boolean LIC7() {
-        // TODO Auto-generated method stub
+        int K_PTS = parameters.K_PTS;
+        double LENGTH1 = parameters.LENGTH1;
+        if (numPoints < 3) return false;
+        assert K_PTS >= 1 && K_PTS <= numPoints - 2;
+        assert LENGTH1 >= 0;
+        for (int i = 0; i < numPoints - (K_PTS + 1); i++) {
+            Point p1 = points[i];
+            Point p2 = points[i + K_PTS + 1];
+            if (distance(p1, p2) > LENGTH1) return true;
+        }
         return false;
     }
 
