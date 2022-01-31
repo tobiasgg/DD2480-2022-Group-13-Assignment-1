@@ -144,7 +144,40 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
     }
 
     public boolean LIC4() {
-        // TODO Auto-generated method stub
+        int Q_PTS = parameters.Q_PTS;
+        int QUADS = parameters.QUADS;
+        assert Q_PTS >= 2 && Q_PTS <= numPoints;
+        assert QUADS >= 1 && QUADS <= 3;
+        for (int i = 0; i <= numPoints - Q_PTS; i++) {
+            boolean[] quadrants = new boolean[4];
+            for (int j = 0; j < Q_PTS; j++) {
+                // Set true if point lies in quadrant 1
+                if (points[i + j].X >= 0 && points[i + j].Y >= 0) {
+                    quadrants[0] = true;
+                }
+                // Set true if point lies in quadrant 2
+                if (points[i + j].X < 0 && points[i + j].Y >= 0) {
+                    quadrants[1] = true;
+                }
+                // Set true if point lies in quadrant 3
+                if (points[i + j].X <= 0 && points[i + j].Y < 0) {
+                    quadrants[2] = true;
+                }
+                // Set true if point lies in quadrant 4
+                if (points[i + j].X > 0 && points[i + j].Y < 0) {
+                    quadrants[3] = true;
+                }
+            }
+            int quadrantsCount = 0;
+            for (boolean quadrant : quadrants) {
+                if (quadrant) {
+                    quadrantsCount++;
+                }
+            }
+            if (quadrantsCount > QUADS) {
+                return true;
+            }
+        }
         return false;
     }
 
