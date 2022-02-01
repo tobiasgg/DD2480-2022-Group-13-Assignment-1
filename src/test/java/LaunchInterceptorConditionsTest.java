@@ -41,6 +41,9 @@ public class LaunchInterceptorConditionsTest {
 
         p.LENGTH1 = 0.0;
         assertFalse(LIC.LIC0());
+
+        p.LENGTH1 = -1;
+        assertThrows(AssertionError.class, () -> LIC.LIC0());
     }
 
     @Test
