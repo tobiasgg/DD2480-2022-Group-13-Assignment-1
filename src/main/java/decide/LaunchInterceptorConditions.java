@@ -148,12 +148,13 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
      *         of radius RADIUS1 (0 ≤ RADIUS1).
      */
     public boolean LIC1() {
+
         double RADIUS1 = parameters.RADIUS1;
+        assert RADIUS1 >= 0;
 
         if (numPoints < 3) {
             return false;
         }
-        assert RADIUS1 >= 0;
         for (int i = 0; i < numPoints - 2; i++) {
             if (!pointsContainedInCircle(points[i], points[i + 1], points[i + 2], RADIUS1)) {
                 return true;

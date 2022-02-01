@@ -62,8 +62,9 @@ public class LaunchInterceptorConditionsTest {
         points[1] = new Point(1, 0);
         points[2] = new Point(-1, 0);
         p.RADIUS1 = 1;
-
         assertFalse(LIC.LIC1());
+        p.RADIUS1 = -1;
+        assertThrows(AssertionError.class, () -> LIC.LIC1());
     }
 
     @Test
