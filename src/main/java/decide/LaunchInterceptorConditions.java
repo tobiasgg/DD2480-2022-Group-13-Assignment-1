@@ -521,7 +521,41 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
     }
 
     public boolean LIC14() {
-        // TODO Auto-generated method stub
+        
+        double AREA1 = parameters.AREA1;
+        double AREA2 = parameters.AREA2;
+        int E_PTS = parameters.E_PTS;
+        int F_PTS = parameters.F_PTS;
+
+        assert AREA2 >= 0;
+
+        boolean first = false;
+        boolean second = false;
+
+        double x1, y1, x2, y2, x3, y3, area;
+        if(numPoints >= 5){
+            for(int i = 0; i < numPoints - E_PTS - F_PTS - 2; i++){
+                x1 = points[i].X;
+                y1 = points[i].Y;
+                x2 = points[i + E_PTS + 1].X;
+                y2 = points[i + E_PTS + 1].Y;
+                x3 = points[i + E_PTS + F_PTS + 2].X;
+                y3 = points[i + E_PTS + F_PTS + 2].Y;
+
+                area = Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 *(y1 - y2)));
+                area = area / 2;
+
+                if(area > AREA1){
+                    first = true;
+                }
+                if(area < AREA2){
+                    second = true;
+                }
+                if(first == true && second == true){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }
