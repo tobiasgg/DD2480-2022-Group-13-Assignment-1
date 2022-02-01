@@ -351,6 +351,7 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
 
         assert A_PTS >= 1 && B_PTS >= 1;
         assert RADIUS1 >= 0;
+        assert A_PTS + B_PTS <= numPoints - 3;
 
         if(numPoints >= 5){
             for(int i = 0; i < numPoints - A_PTS - B_PTS - 2; i++){
