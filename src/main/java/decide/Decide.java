@@ -86,10 +86,10 @@ public class Decide {
     }
 
     public class Output {
-        boolean launch;
-        boolean[] cmv;
-        boolean[][] pum;
-        boolean[] fuv;
+        public boolean launch;
+        public boolean[] cmv;
+        public boolean[][] pum;
+        public boolean[] fuv;
 
         public Output(boolean launch, boolean[] cmv, boolean[][] pum, boolean[] fuv) {
             this.launch = launch;
