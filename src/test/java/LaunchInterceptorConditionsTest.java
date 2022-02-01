@@ -241,7 +241,40 @@ public class LaunchInterceptorConditionsTest {
 
     @Test
     void LIC8_test() {
+        LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
+        int numPoints = 7;
+        Point[] points = new Point[numPoints];
+        points[0] = new Point(-1, 0);
+        points[1] = new Point(0, 0);
+        points[2] = new Point(0, 0);
+        points[3] = new Point(0, 0);
+        points[4] = new Point(1, 0);
+        points[5] = new Point(0, 0);
+        points[6] = new Point(0, 0);
+        LIC.numPoints = numPoints;
+        LIC.points = points;
+        Parameters p = new Parameters();
+        LIC.initialize(numPoints, points, p);
+        p.RADIUS1 = 0.95;
+        p.A_PTS = 1;
+        p.B_PTS = 1;
+        assertTrue(LIC.LIC8());
 
+        points[0] = new Point(0, 0);
+        points[1] = new Point(4, 0);
+        points[2] = new Point(0, 0);
+        points[3] = new Point(4, 0);
+        points[4] = new Point(0, 0);
+        points[5] = new Point(4, 0);
+        points[6] = new Point(0.5, 0);
+        p.RADIUS1 = 0.95;
+        p.A_PTS = 1;
+        p.B_PTS = 1;
+        assertFalse(LIC.LIC8());
+        p.RADIUS1 = -1;
+        p.A_PTS = 0;
+        p.B_PTS = 0;
+        assertThrows(AssertionError.class, () -> LIC.LIC8());
     }
 
     @Test

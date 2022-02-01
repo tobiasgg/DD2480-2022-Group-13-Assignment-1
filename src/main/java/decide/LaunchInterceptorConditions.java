@@ -345,7 +345,24 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
     }
 
     public boolean LIC8() {
-        // TODO Auto-generated method stub
+        double RADIUS1 = parameters.RADIUS1;
+        int A_PTS = parameters.A_PTS;
+        int B_PTS = parameters.B_PTS;
+
+        assert A_PTS >= 1 && B_PTS >= 1;
+        assert RADIUS1 >= 0;
+
+        if(numPoints >= 5){
+            for(int i = 0; i < numPoints - A_PTS - B_PTS - 2; i++){
+                Point p1 = points[i];
+                Point p2 = points[i + A_PTS + 1];
+                Point p3 = points[i + A_PTS + B_PTS + 2];
+
+                if (!pointsContainedInCircle(p1, p2, p3, RADIUS1)){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
