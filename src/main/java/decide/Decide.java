@@ -14,6 +14,11 @@ public class Decide {
         this.launchCalculator = launchCalculator;
     }
 
+    public static Decide DEFAULT() {
+        return new Decide(Default.lics, Default.pumCalculator, Default.fuvCalculator,
+                Default.launchCalculator);
+    }
+
     public interface LaunchInterceptorConditions {
         public void initialize(int numPoints, Point[] points, Parameters parameters);
 
