@@ -379,8 +379,46 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     *
+     * @return true if there exists at least one set of two data points,
+     * separated by exactly K_PTS consecutive intervening points,
+     * which are a distance greater than the length, LENGTH1, apart.
+     * In addition, there exists at least one set of two data points
+     * (which can be the same or different from the two data points just mentioned),
+     * separated by exactly K_PTS consecutive intervening points,
+     * that are a distance less than the length, LENGTH2, apart.
+     * Both parts must be true for the LIC to be true.
+     * The condition is not met when NUMPOINTS < 3.
+     *
+     * 0 ≤ LENGTH2
+     */
     public boolean LIC12() {
-        // TODO Auto-generated method stub
+        int K_PTS = parameters.K_PTS;
+        double LENGTH1 = parameters.LENGTH1;
+        double LENGTH2 = parameters.LENGTH2;
+        if (numPoints < 3) return false;
+        assert K_PTS >= 1 && K_PTS <= numPoints - 2;
+        assert LENGTH1 >= 0;
+        assert LENGTH2 >= 0;
+        // Condition one: There exist a set of two points with K_PTS between them
+        // that is at a distance larger than LENGTH1 Apart
+        boolean cond1 = false;
+        // Condition two: There exist a set of two points with K_PTS between them
+        // that is at a distance shorter than LENGTH2 Apart
+        boolean cond2 = false;
+        for (int i = 0; i < numPoints - (K_PTS + 1); i++) {
+            Point p1 = points[i];
+            Point p2 = points[i + K_PTS + 1];
+            if (distance(p1, p2) > LENGTH1) {
+                cond1 = true;
+                if (cond2) return true;
+            }
+            if (distance(p1, p2) < LENGTH2) {
+                cond2 = true;
+                if (cond1) return true;
+            }
+        }
         return false;
     }
 

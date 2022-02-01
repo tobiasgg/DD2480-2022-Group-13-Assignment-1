@@ -300,8 +300,56 @@ public class LaunchInterceptorConditionsTest {
     }
 
     @Test
-    void LIC12_test(){
-
+    void LIC12_test() {
+        LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
+        int numPoints = 5;
+        Point[] points = new Point[numPoints];
+        points[0] = new Point(0, 0);
+        points[1] = new Point(1, 0);
+        points[2] = new Point(0, 1);
+        points[3] = new Point(2, 0);
+        points[4] = new Point(4, 0);
+        LIC.numPoints = numPoints;
+        LIC.points = points;
+        Parameters p = new Parameters();
+        LIC.initialize(numPoints, points, p);
+        p.K_PTS = 3;
+        p.LENGTH1 = 3;
+        p.LENGTH2 = 5;
+        assertTrue(LIC.LIC12());
+        p.K_PTS = 2;
+        assertFalse(LIC.LIC12());
+        p.K_PTS = 3;
+        p.LENGTH2 = 4;
+        assertFalse(LIC.LIC12());
+        p.LENGTH2 = 5;
+        p.LENGTH1 = 4;
+        assertFalse(LIC.LIC12());
+        p.K_PTS = 6;
+        assertThrows(AssertionError.class, () -> LIC.LIC12());
+        p.K_PTS = 2;
+        p.LENGTH1 = -1.0;
+        assertThrows(AssertionError.class, () -> LIC.LIC12());
+        p.LENGTH1 = 1.0;
+        p.LENGTH2 = -1.0;
+        assertThrows(AssertionError.class, () -> LIC.LIC12());
+        LIC.numPoints = 2;
+        assertFalse(LIC.LIC12());
+        LIC.numPoints = 5;
+        p.K_PTS = 1;
+        p.LENGTH1 = 3.0;
+        p.LENGTH2 = 1.0;
+        points[0] = new Point(0, 0);
+        points[1] = new Point(1, 0);
+        points[2] = new Point(0, 4);
+        points[3] = new Point(0, 3.5);
+        points[4] = new Point(0, 4.5);
+        assertTrue(LIC.LIC12());
+        p.K_PTS = 2;
+        assertFalse(LIC.LIC12());
+        p.LENGTH2 = 3.5;
+        points[4] = new Point(4.4, 0);
+        assertTrue(LIC.LIC12());
     }
 
     @Test
