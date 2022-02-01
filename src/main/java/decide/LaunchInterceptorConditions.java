@@ -199,7 +199,27 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
     }
 
     public boolean LIC3() {
-        // TODO Auto-generated method stub
+        double AREA1 = parameters.AREA1;
+
+        double x1, y1, x2, y2, x3, y3, area;
+        assert AREA1 > 0;
+
+        for (int i = 0; i < numPoints - 2; i++){
+            x1 = points[i].X;
+            y1 = points[i].Y;
+            x2 = points[i + 1].X;
+            y2 = points[i + 1].Y;
+            x3 = points[i + 2].X;
+            y3 = points[i + 2].Y;
+    
+            //Given 3 vertices of a triangle, area is calculated as such:
+            area = Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 *(y1 - y2)));
+            area = area / 2;
+    
+            if(area > AREA1){
+                return true;
+            }
+        }
         return false;
     }
 
