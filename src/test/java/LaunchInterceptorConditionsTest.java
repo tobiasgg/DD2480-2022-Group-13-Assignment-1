@@ -161,7 +161,22 @@ public class LaunchInterceptorConditionsTest {
 
     @Test
     void LIC5_test() {
+        LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
+        int numPoints = 3;
+        Point[] points = new Point[3];
+        points[0] = new Point(0, 0);
+        points[1] = new Point(-1, 0);
+        points[2] = new Point(0, 0);
+        LIC.numPoints = numPoints;
+        LIC.points = points;
+        Parameters p = new Parameters();
+        LIC.initialize(numPoints, points, p);
+        assertTrue(LIC.LIC5());
 
+        points[0] = new Point(0, 0);
+        points[1] = new Point(1, 0);
+        points[2] = new Point(2, 0);
+        assertFalse(LIC.LIC5());
     }
 
     @Test
