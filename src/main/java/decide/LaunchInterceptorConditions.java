@@ -268,7 +268,11 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
     }
 
     public boolean LIC5() {
-        // TODO Auto-generated method stub
+        for(int i = 0; i < numPoints - 1; i++){
+            if((points[i + 1].X - points[i].X) < 0 ){
+                return true;
+            }
+        }
         return false;
     }
 
