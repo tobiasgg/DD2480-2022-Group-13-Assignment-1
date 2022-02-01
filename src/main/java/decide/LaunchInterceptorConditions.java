@@ -130,7 +130,7 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
      */
     public boolean LIC0() {
         double LENGTH1 = parameters.LENGTH1;
-
+        assert LENGTH1 >= 0: "LENGTH1 must be non-negative";
         for (int i = 0; i < numPoints - 1; i++) {
             double dist = distance(points[i], points[i + 1]);
             if (dist > LENGTH1) {
