@@ -111,6 +111,10 @@ public class Decide {
             throw new Exception("LCM size is not 15x15");
         }
 
+        if (puv.length != 15) {
+            throw new Exception("PUV size is not 15");
+        }
+
         boolean[] cmv = calculateConditionsMetVector();
         boolean[][] pum = pumCalculator.calculate(lcm, cmv);
         boolean[] fuv = fuvCalculator.calculate(pum, puv);

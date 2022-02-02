@@ -223,4 +223,22 @@ public class DecideTests {
         assertFalse(true, "no exception thrown when LCM size is not 15x15");
     }
 
+    @Test
+    public void testInvalidPUV() {
+        Decide d = Decide.DEFAULT();
+        Parameters parameters = new Parameters();
+        int numPoints = 5;
+        Point[] points = new Point[numPoints];
+        LogicalConnectorOperator[][] lcm = new LogicalConnectorOperator[15][15];
+        boolean[] puv = new boolean[14];
+        try {
+            d.decide(numPoints, points, parameters, lcm, puv);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "PUV size is not 15");
+            return;
+        }
+
+        assertFalse(true, "no exception thrown when PUV size is not 15");
+    }
+
 }
