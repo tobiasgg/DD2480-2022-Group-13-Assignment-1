@@ -187,4 +187,40 @@ public class DecideTests {
         assertFalse(true, "no exception thrown when numPoint != points.length");
     }
 
+    @Test
+    public void testInvalidLCM1() {
+        Decide d = Decide.DEFAULT();
+        Parameters parameters = new Parameters();
+        int numPoints = 5;
+        Point[] points = new Point[numPoints];
+        LogicalConnectorOperator[][] lcm = new LogicalConnectorOperator[14][15];
+        boolean[] puv = new boolean[15];
+        try {
+            d.decide(numPoints, points, parameters, lcm, puv);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "LCM size is not 15x15");
+            return;
+        }
+
+        assertFalse(true, "no exception thrown when LCM size is not 15x15");
+    }
+
+    @Test
+    public void testInvalidLCM2() {
+        Decide d = Decide.DEFAULT();
+        Parameters parameters = new Parameters();
+        int numPoints = 5;
+        Point[] points = new Point[numPoints];
+        LogicalConnectorOperator[][] lcm = new LogicalConnectorOperator[15][14];
+        boolean[] puv = new boolean[15];
+        try {
+            d.decide(numPoints, points, parameters, lcm, puv);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "LCM size is not 15x15");
+            return;
+        }
+
+        assertFalse(true, "no exception thrown when LCM size is not 15x15");
+    }
+
 }
