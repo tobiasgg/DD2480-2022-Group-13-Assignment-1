@@ -29,8 +29,21 @@ The **FUV** (*Final Unlocking Vector*) is a 15 x 1 boolean vector where each ele
 Finally, the function **Decide()** returns true if and only if *all* elements in the **FUV** are **TRUE**.
 
 ## How to use
+Our project uses Maven as the build tool, so it is essential that it is installed before attempting to run the program.
+To run the program, change the inputs in `src/main/java/Main.java` as you like and type the following in the terminal:
+```
+mvn clean install
+mvn exec:java
+```
+You can also modify the tests contained in ``src/test/java`` correspondingly. To run the tests, type:
+```
+mvn test
+```
 
 ## Way of Working
+Currently, we are in the stage of *In Place*. This is because we have already established a bunch of principles and agreed on the tools that we use for the work, and they are being used by the whole team to perform the work. We would regularly inspect if the rules or principles are followed and if not, we would make changes and make sure we abide by them. <br>
+But we are still not in the stage of *Working well* since we cannot naturally apply the practices without thinking about them. <br>
+We think the obstacles to reaching the next stage is time because it has not been a long time since the group was formed and principles were established. <br>
 
 ## Contributions
 
