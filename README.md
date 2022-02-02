@@ -53,3 +53,13 @@ Implemented
 - LIC14
 
 along with corresponding unit tests.
+
+#### Siyao Liu
+Implemented
+- LIC1
+- LIC4
+- LIC9
+- LIC11
+- LIC13
+
+along with corresponding unit tests.
