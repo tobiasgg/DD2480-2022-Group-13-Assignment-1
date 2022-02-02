@@ -35,7 +35,7 @@ To run the program, change the inputs in `src/main/java/Main.java` as you like a
 mvn clean install
 mvn exec:java
 ```
-You can also modify the tests contained in ``src/test/java`` correspondingly. To run the tests, type:
+You can also modify the tests contained in `src/test/java` correspondingly. To run the tests, type:
 ```
 mvn test
 ```
