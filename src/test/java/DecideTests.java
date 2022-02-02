@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.lang.reflect.Field;
@@ -31,7 +32,7 @@ public class DecideTests {
     }
 
     @Test
-    public void inputPositiveTest() {
+    public void inputPositiveTest() throws Exception {
         Decide d = Decide.DEFAULT();
         int numPoints = 5;
         Point[] points = new Point[numPoints];
@@ -100,7 +101,7 @@ public class DecideTests {
     }
 
     @Test
-    public void inputNegativeTest() {
+    public void inputNegativeTest() throws Exception {
         Decide d = Decide.DEFAULT();
         int numPoints = 5;
         Point[] points = new Point[numPoints];
@@ -166,6 +167,78 @@ public class DecideTests {
             puv[i] = true;
         }
         assertFalse(d.decide(numPoints, points, parameters, lcm, puv).launch);
+    }
+
+    @Test
+    public void testNumPointsNotMatchPointsLength() {
+        Decide d = Decide.DEFAULT();
+        Parameters parameters = new Parameters();
+        int numPoints = 5;
+        Point[] points = new Point[numPoints - 1];
+        LogicalConnectorOperator[][] lcm = new LogicalConnectorOperator[15][15];
+        boolean[] puv = new boolean[15];
+        try {
+            d.decide(numPoints, points, parameters, lcm, puv);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "numPoint != points.length");
+            return;
+        }
+
+        assertFalse(true, "no exception thrown when numPoint != points.length");
+    }
+
+    @Test
+    public void testInvalidLCM1() {
+        Decide d = Decide.DEFAULT();
+        Parameters parameters = new Parameters();
+        int numPoints = 5;
+        Point[] points = new Point[numPoints];
+        LogicalConnectorOperator[][] lcm = new LogicalConnectorOperator[14][15];
+        boolean[] puv = new boolean[15];
+        try {
+            d.decide(numPoints, points, parameters, lcm, puv);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "LCM size is not 15x15");
+            return;
+        }
+
+        assertFalse(true, "no exception thrown when LCM size is not 15x15");
+    }
+
+    @Test
+    public void testInvalidLCM2() {
+        Decide d = Decide.DEFAULT();
+        Parameters parameters = new Parameters();
+        int numPoints = 5;
+        Point[] points = new Point[numPoints];
+        LogicalConnectorOperator[][] lcm = new LogicalConnectorOperator[15][14];
+        boolean[] puv = new boolean[15];
+        try {
+            d.decide(numPoints, points, parameters, lcm, puv);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "LCM size is not 15x15");
+            return;
+        }
+
+        assertFalse(true, "no exception thrown when LCM size is not 15x15");
+    }
+
+    @Test
+    public void testInvalidPUV() {
+        Decide d = Decide.DEFAULT();
+        Parameters parameters = new Parameters();
+        int numPoints = 5;
+        Point[] points = new Point[numPoints];
+        LogicalConnectorOperator[][] lcm = new LogicalConnectorOperator[15][15];
+        boolean[] puv = new boolean[14];
+        try {
+            d.decide(numPoints, points, parameters, lcm, puv);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "PUV size is not 15");
+            return;
+        }
+
+        assertFalse(true, "no exception thrown when PUV size is not 15");
     }
 
 }

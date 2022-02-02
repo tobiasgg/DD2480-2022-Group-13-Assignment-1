@@ -100,8 +100,20 @@ public class Decide {
     }
 
     public Output decide(int numPoints, Point[] points, Parameters parameters, LogicalConnectorOperator[][] lcm,
-            boolean[] puv) {
+            boolean[] puv) throws Exception {
         lics.initialize(numPoints, points, parameters);
+
+        if (numPoints != points.length) {
+            throw new Exception("numPoint != points.length");
+        }
+
+        if (lcm.length != 15 || lcm[0].length != 15) {
+            throw new Exception("LCM size is not 15x15");
+        }
+
+        if (puv.length != 15) {
+            throw new Exception("PUV size is not 15");
+        }
 
         boolean[] cmv = calculateConditionsMetVector();
         boolean[][] pum = pumCalculator.calculate(lcm, cmv);
