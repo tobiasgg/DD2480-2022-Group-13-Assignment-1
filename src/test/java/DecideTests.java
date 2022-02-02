@@ -31,7 +31,7 @@ public class DecideTests {
     }
 
     @Test
-    public void inputPositiveTest() {
+    public void inputPositiveTest() throws Exception {
         Decide d = Decide.DEFAULT();
         int numPoints = 5;
         Point[] points = new Point[numPoints];
@@ -100,7 +100,7 @@ public class DecideTests {
     }
 
     @Test
-    public void inputNegativeTest() {
+    public void inputNegativeTest() throws Exception {
         Decide d = Decide.DEFAULT();
         int numPoints = 5;
         Point[] points = new Point[numPoints];

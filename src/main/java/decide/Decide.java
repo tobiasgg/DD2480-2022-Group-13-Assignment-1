@@ -100,7 +100,7 @@ public class Decide {
     }
 
     public Output decide(int numPoints, Point[] points, Parameters parameters, LogicalConnectorOperator[][] lcm,
-            boolean[] puv) {
+            boolean[] puv) throws Exception {
         lics.initialize(numPoints, points, parameters);
 
         boolean[] cmv = calculateConditionsMetVector();

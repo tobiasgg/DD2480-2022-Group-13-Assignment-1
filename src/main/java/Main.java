@@ -1,4 +1,5 @@
 import decide.*;
+import decide.Decide.Output;
 
 public class Main {
     public static void main(String[] args) {
@@ -67,10 +68,17 @@ public class Main {
             puv[i] = true;
         }
 
-        if (d.decide(numPoints, points, parameters, lcm, puv).launch) {
-            System.out.println("YES");
-        } else {
-            System.out.println("NO");
+        try {
+            Output result = d.decide(numPoints, points, parameters, lcm, puv);
+
+            if (result.launch) {
+                System.out.println("YES");
+            } else {
+                System.out.println("NO");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
     }
 }
