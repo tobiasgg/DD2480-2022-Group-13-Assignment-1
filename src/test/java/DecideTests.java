@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.lang.reflect.Field;
@@ -166,6 +167,24 @@ public class DecideTests {
             puv[i] = true;
         }
         assertFalse(d.decide(numPoints, points, parameters, lcm, puv).launch);
+    }
+
+    @Test
+    public void testNumPointsNotMatchPointsLength() {
+        Decide d = Decide.DEFAULT();
+        Parameters parameters = new Parameters();
+        int numPoints = 5;
+        Point[] points = new Point[numPoints - 1];
+        LogicalConnectorOperator[][] lcm = new LogicalConnectorOperator[15][15];
+        boolean[] puv = new boolean[15];
+        try {
+            d.decide(numPoints, points, parameters, lcm, puv);
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "numPoint != points.length");
+            return;
+        }
+
+        assertFalse(true, "no exception thrown when numPoint != points.length");
     }
 
 }

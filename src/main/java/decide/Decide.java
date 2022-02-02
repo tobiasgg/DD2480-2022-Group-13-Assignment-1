@@ -103,6 +103,10 @@ public class Decide {
             boolean[] puv) throws Exception {
         lics.initialize(numPoints, points, parameters);
 
+        if (numPoints != points.length) {
+            throw new Exception("numPoint != points.length");
+        }
+
         boolean[] cmv = calculateConditionsMetVector();
         boolean[][] pum = pumCalculator.calculate(lcm, cmv);
         boolean[] fuv = fuvCalculator.calculate(pum, puv);
