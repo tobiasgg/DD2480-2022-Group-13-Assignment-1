@@ -6,6 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LaunchInterceptorConditionsTest {
 
+    /**
+     * There exists at least one set of two consecutive data points that are 
+     * a distance greater than the length, LENGTH1, apart.
+     */
     @Test
     void LIC0_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -46,6 +50,10 @@ public class LaunchInterceptorConditionsTest {
         assertThrows(AssertionError.class, () -> LIC.LIC0());
     }
 
+    /**
+     * There exists at least one set of three consecutive data points that cannot all 
+     * be contained within or on a circle of radius RADIUS1.
+     */
     @Test
     void LIC1_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -70,6 +78,13 @@ public class LaunchInterceptorConditionsTest {
         assertThrows(AssertionError.class, () -> LIC.LIC1());
     }
 
+    /**
+     * There exists at least one set of three consecutive data points which form an angle 
+     * such that: angle < (PI − EPSILON) or angle > (PI + EPSILON). 
+     * The second of the three consecutive points is always the vertex of the angle. 
+     * If either the first point or the last point (or both) coincides with the vertex, 
+     * the angle is undefined and the LIC is not satisfied by those three points.
+     */
     @Test
     void LIC2_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -110,6 +125,11 @@ public class LaunchInterceptorConditionsTest {
         assertThrows(AssertionError.class, () -> LIC.LIC2());
     }
 
+    /**
+     * Exists atleast one set of three consecutive points that are
+     * the vertices of a triangle with an area greater than AREA1.
+     * AREA1 >= 0
+     */
     @Test
     void LIC3_test(){
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -118,6 +138,7 @@ public class LaunchInterceptorConditionsTest {
         points[0] = new Point(0, 1);
         points[1] = new Point(3, 0);
         points[2] = new Point(0, 6);
+        //These 3 points generates an area of 7.5. Test should be true.
         LIC.numPoints = numPoints;
         LIC.points = points;
         Parameters p = new Parameters();
@@ -128,15 +149,22 @@ public class LaunchInterceptorConditionsTest {
         points[0] = new Point(0, 1);
         points[1] = new Point(0, 1);
         points[2] = new Point(0, 1);
+        //These 3 points generates an area of 0. Test should be false.
         LIC.numPoints = numPoints;
         LIC.points = points;
         p.AREA1 = 5.0;
         assertFalse(LIC.LIC3());
+        //Area cannot be negative.
         p.AREA1 = -1;
         assertThrows(AssertionError.class, () -> LIC.LIC3());
 
     }
 
+    /**
+     * There exists at least one set of Q PTS consecutive data points that lie in 
+     * more than QUADS quadrants. Where there is ambiguity as to which quadrant contains 
+     * a given point, priority of decision will be by quadrant number, i.e., I, II, III, IV. 
+     */
     @Test
     void LIC4_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -163,6 +191,11 @@ public class LaunchInterceptorConditionsTest {
         assertThrows(AssertionError.class, () -> LIC.LIC4());
     }
 
+    /**
+     * Exists atleast on set of consecutive datapoints where 
+     * X[j] - X[i] < 0, where i = j - 1.
+     */
+
     @Test
     void LIC5_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -171,6 +204,7 @@ public class LaunchInterceptorConditionsTest {
         points[0] = new Point(0, 0);
         points[1] = new Point(-1, 0);
         points[2] = new Point(0, 0);
+        //points[1] - points[0] < 0. Test should be true.
         LIC.numPoints = numPoints;
         LIC.points = points;
         Parameters p = new Parameters();
@@ -180,9 +214,17 @@ public class LaunchInterceptorConditionsTest {
         points[0] = new Point(0, 0);
         points[1] = new Point(1, 0);
         points[2] = new Point(2, 0);
+        //No set of consecutive points fulfills X[j] - X[i] < 0. Test should be false.
         assertFalse(LIC.LIC5());
     }
 
+    /**
+     * There exists at least one set of N PTS consecutive data points such that at least 
+     * one of the points lies a distance greater than DIST from the line joining the first 
+     * and last of these N PTS points. If the first and last points of these N PTS are 
+     * identical, then the calculated distance to compare with DIST will be the distance 
+     * from the coincident point to all other points of the N PTS consecutive points.
+     */
     @Test
     void LIC6_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -213,6 +255,10 @@ public class LaunchInterceptorConditionsTest {
         assertFalse(LIC.LIC6());
     }
 
+    /**
+     * There exists at least one set of two data points separated by exactly K PTS
+     * consecutive points that are a distance greater than the length, LENGTH1, apart. 
+     */
     @Test
     void LIC7_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -243,6 +289,11 @@ public class LaunchInterceptorConditionsTest {
         assertFalse(LIC.LIC7());
     }
 
+    /**
+     * Exists atleast one set of three consecutive datapoints separated by
+     * A_BTS and B_PTS respectively that cannot be contained within or on
+     * a circle of radius RADIUS1.
+     */
     @Test
     void LIC8_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -263,6 +314,11 @@ public class LaunchInterceptorConditionsTest {
         p.A_PTS = 1;
         p.B_PTS = 1;
         assertTrue(LIC.LIC8());
+        /**
+         * A_PTS = B_PTS = 1. points[0], points[2] and points[4] are separated by A_PTS
+         * and B_PTS and cannot be contained by a circle with radius 0.95(needs to be
+         * atleast 1). Test should be true.
+         */
 
         points[0] = new Point(0, 0);
         points[1] = new Point(4, 0);
@@ -275,12 +331,23 @@ public class LaunchInterceptorConditionsTest {
         p.A_PTS = 1;
         p.B_PTS = 1;
         assertFalse(LIC.LIC8());
+        /**
+         * A_PTS = B_PTS 1. There exist no consecutive datapoints separated by A_PTS and
+         * B_PTS that cannot be contained by a circle with radius 0.95. Test should be false.
+         */
+
         p.RADIUS1 = -1;
         p.A_PTS = 0;
         p.B_PTS = 0;
         assertThrows(AssertionError.class, () -> LIC.LIC8());
+        //RADIUS1 cannot be negative. A_PTS >= 1 && B_PTS >= 1. 
     }
 
+    /**
+     * There exists at least one set of three data points separated by exactly C PTS 
+     * and D PTS consecutive intervening points, respectively, that form an angle 
+     * such that: angle < (PI − EPSILON) or angle > (PI + EPSILON)
+     */
     @Test
     void LIC9_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -342,6 +409,11 @@ public class LaunchInterceptorConditionsTest {
         assertThrows(AssertionError.class, () -> LIC.LIC9());
     }
 
+    /**
+     * Exists atleast on set of three consecutive datapoints separated by E_PTS and
+     * F_PTS respectively that are the vertices of a triangle with area greater than
+     * AREA1. 
+     */
     @Test
     void LIC10_test(){
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -360,6 +432,10 @@ public class LaunchInterceptorConditionsTest {
         p.E_PTS = 1;
         p.F_PTS = 1;
         assertTrue(LIC.LIC10());
+        /**
+         * points[0], [2], [4] forms a triangle with area 2.0, which is larger than AREA1(1.95).
+         * Test should be true.
+         */
 
         points[0] = new Point(-2, 0);
         points[1] = new Point(0, 0);
@@ -370,12 +446,22 @@ public class LaunchInterceptorConditionsTest {
         p.E_PTS = 1;
         p.F_PTS = 1;
         assertFalse(LIC.LIC10());
+        /**
+         * points[0], [2], [4] forms a triangle with area 2, which is the same as AREA1(2.0).
+         * Test should be false.
+         */
         p.AREA1 = -1;
         p.E_PTS = 0;
         p.F_PTS = 0;
         assertThrows(AssertionError.class, () -> LIC.LIC10());
+        // AREA1 > 0. E_PTS, F_PTS >= 1.
     }
 
+    /**
+     * There exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), 
+     * separated by exactly G PTS consecutive intervening points, 
+     * such that X[j] - X[i] < 0. (where i < j).
+     */
     @Test
     void LIC11_test(){
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -402,6 +488,13 @@ public class LaunchInterceptorConditionsTest {
 
     }
 
+    /**
+     * There exists at least one set of two data points, separated by exactly K PTS 
+     * points, which are a distance greater than the length, LENGTH1, apart. 
+     * In addition, there exists at least one set of two data points (which can be the 
+     * same or different from the previous two), separated by exactly K PTS intervening
+     * points, that are a distance less than the length, LENGTH2, apart.
+     */
     @Test
     void LIC12_test() {
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -455,6 +548,14 @@ public class LaunchInterceptorConditionsTest {
         assertTrue(LIC.LIC12());
     }
 
+    /**
+     * There exists at least one set of three data points, separated by exactly A PTS 
+     * and B PTS consecutive intervening points, respectively, that cannot be contained 
+     * within or on a circle of radius RADIUS1. In addition, there exists at least one 
+     * set of three data points (which can be the same as the previous three) separated 
+     * by exactly A PTS and B PTS consecutive intervening points, respectively, that 
+     * can be contained in or on a circle of radius RADIUS2.
+     */
     @Test
     void LIC13_test(){
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -489,6 +590,14 @@ public class LaunchInterceptorConditionsTest {
 
     }
 
+    /**
+     * Exists atleast one set of three data points, separated E_PTS, F_PTS 
+     * respectively, that are the vertices of a triangle with area greater than AREA1. 
+     * In addition, there exist three data points (which can be the same or different 
+     * from the three data points just mentioned) separated by exactly E PTS and F PTS 
+     * that are the vertices of a triangle with area less than AREA2. 
+     * Both parts must be true for the LIC to be true.
+     */
     @Test
     void LIC14_test(){
         LaunchInterceptorConditions LIC = new LaunchInterceptorConditions();
@@ -508,6 +617,10 @@ public class LaunchInterceptorConditionsTest {
         p.E_PTS = 1;
         p.F_PTS = 1;
         assertTrue(LIC.LIC14());
+        /**
+         * points[0], [2], [4] forms a triangle with area = 10, which is larger than
+         * AREA1(5) but smaller than AREA2(100). Test should be true.
+         */
 
         points[0] = new Point(0, 0);
         points[1] = new Point(0, 0);
@@ -519,11 +632,16 @@ public class LaunchInterceptorConditionsTest {
         p.E_PTS = 1;
         p.F_PTS = 1;
         assertFalse(LIC.LIC14());
+        /**
+         * points[0], [2], [4] forms a triangle with area = 1000, which is larger than
+         * AREA1(5) and larger than AREA2(100). Test should be false.
+         */
         p.AREA1 = 0;
         p.AREA2 = -1;
         p.E_PTS = 0;
         p.F_PTS = 0;
         assertThrows(AssertionError.class, () -> LIC.LIC14());
+        //AREA2 >= 0
     }
 
 }
