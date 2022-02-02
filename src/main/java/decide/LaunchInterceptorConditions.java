@@ -198,7 +198,20 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         }
         return false;
     }
-
+    /**
+     * Loops all sets of datapoints to see if there exists three consecutive
+     * datapoints that are the vertices of a triangle with an area greater
+     * than AREA1.
+     * 
+     * @return true if there are atleast one set of three consecutive datapoints
+     * that together form a triangle with an area greater than AREA1. 
+     * Otherwise false.
+     * 
+     * (AREA1 >= 0)
+     * 
+     * Formula for calculating area of triangle given three datapoints:
+     * [https://www.mathopenref.com/coordtrianglearea.html]
+     */
     public boolean LIC3() {
         double AREA1 = parameters.AREA1;
 
@@ -268,6 +281,13 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     * Loops all datapoints to see if there exists two consecutive
+     * datapoints, (X[i], Y[i]) and (X[j], Y[j]), such that 
+     * X[j] - X[i] < 0, where i = j - 1.
+     * 
+     * @return true if atleast one set of two consecutive datapoints exists.
+     */
     public boolean LIC5() {
         for(int i = 0; i < numPoints - 1; i++){
             if(points[i + 1].X - points[i].X < 0 ){
@@ -345,6 +365,18 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     * Loops all sets of three datapoints separated by A_PTS and B_PTS and checks if 
+     * LIC8 is satisfied.
+     * 
+     * @return true if there exists atleast on set of three consecutive intervening
+     * datapoints separated by exactly A_PTS and B_PTS, respectively, that cannot
+     * be contained within or on a circle of radius RADIUS1.
+     * The condition is not met when NUMPOINTS < 5.
+     * 
+     * 1 <= A_PTS, 1 <= B_PTS
+     * A_PTS + B_PTS <= NUMPOINTS - 3
+     */
     public boolean LIC8() {
         double RADIUS1 = parameters.RADIUS1;
         int A_PTS = parameters.A_PTS;
@@ -395,6 +427,17 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         return false;
     }
 
+    /**
+     * Loops all datapoints separated by E_PTS and F_PTS  to see if LIC10 is satisfied.
+     * 
+     * @return true if there exist atleast one set of three consecutive intervening
+     * datapoints separated by E_PTS and F_PTS, respectively, that are the vertices
+     * of a triangle with area greater than AREA1.
+     * The condition is not met when NUMPOINTS < 5.
+     * 
+     * 1 <= E_PTS, F_PTS
+     * E_PTS + F_PTS <= NUMPOINTS - 3
+     */
     public boolean LIC10() {
         double AREA1 = parameters.AREA1;
         int E_PTS = parameters.E_PTS;
@@ -521,6 +564,21 @@ public class LaunchInterceptorConditions implements Decide.LaunchInterceptorCond
         }
         return flag1 && flag2;
     }
+
+    /**
+     * Loops all datapoints separated by E_PTS and F_PTS to see if LIC14 is satisfied.
+     * 
+     * @return true if there exists atleast one set of three consecutive, intervening
+     * datapoints separated by E_PTS and F_PTS respectively, that are the vertices of
+     * a triangle greater than AREA1. In addition, there exists three dataåpoints(which 
+     * can be the same or different from the previously mentioned datapoints) separated
+     * by exactly E_PTS and F_PTS consecutive intervening datapoints, respectively, that
+     * are the vertices of a triangle with area less than AREA2. Both parts must be true
+     * for the LIC to be true.
+     * The condition is not met when NUMPOINTS < 5.
+     * 
+     * 0 <= AREA2
+     */
 
     public boolean LIC14() {
         
