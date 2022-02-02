@@ -47,7 +47,7 @@ We think the obstacles to reaching the next stage is time because it has not bee
 
 ## Contributions
 
-#### Tobias Gabi Goobar:
+### Tobias Gabi Goobar:
 Implemented
 - LIC0
 - LIC2
@@ -57,7 +57,7 @@ Implemented
 
 along with corresponding unit tests.
 
-#### Filip Bäck
+### Filip Bäck
 Implemented
 - LIC3
 - LIC5
@@ -67,7 +67,7 @@ Implemented
 
 along with corresponding unit tests.
 
-#### Siyao Liu
+### Siyao Liu
 Implemented
 - LIC1
 - LIC4
@@ -77,7 +77,7 @@ Implemented
 
 along with corresponding unit tests.
 
-#### Edwin So
+### Edwin So
 Designed
 - Code structure and code skeleton
 Implemented
