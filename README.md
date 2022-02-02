@@ -43,3 +43,13 @@ Implemented
 - LIC12
 
 along with corresponding unit tests.
+
+#### Filip Bäck
+Implemented
+- LIC3
+- LIC5
+- LIC8
+- LIC10
+- LIC14
+
+along with corresponding unit tests.
