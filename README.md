@@ -80,12 +80,14 @@ along with corresponding unit tests.
 #### Edwin So
 Designed
 - Code structure and code skeleton
+
 Implemented
 - Decide class
 - FUV logics
 - Launch logics
 - Preliminary Unlocking Matrix logics
 - (along with corresponding unit tests.)
+
 Enabled
 - GitGub Actions (CI for checking if code compiles and if tests are passed or not)
 
