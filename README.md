@@ -77,6 +77,18 @@ Implemented
 
 along with corresponding unit tests.
 
+#### Edwin So
+Designed
+- Code structure and code skeleton
+Implemented
+- Decide class
+- FUV logics
+- Launch logics
+- Preliminary Unlocking Matrix logics
+- (along with corresponding unit tests.)
+Enabled
+- GitGub Actions (CI for checking if code compiles and if tests are passed or not)
+
 ### Note to the grader(s):
 - Basically 99% of the commits are linked to a valid issue with description. If it is not the case at the first glance, please check the comment area or the corresponding pull requests, and you will see the linked issue.
 - Possible ambiguity: the way we interpret the requirements of the parameters is that the input of must fulfill them, otherwise we directly throw **assertion errors** and abort the program.
