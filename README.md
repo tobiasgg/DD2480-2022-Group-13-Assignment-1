@@ -35,19 +35,21 @@ To run the program, change the inputs in `src/main/java/Main.java` as you like a
 mvn clean install
 mvn exec:java
 ```
-You can also modify the tests contained in ``src/test/java`` correspondingly. To run the tests, type:
+You can also modify the tests contained in `src/test/java` correspondingly. To run the tests, type:
 ```
 mvn test
 ```
 
 ## Way of Working
-Currently, we are in the stage of *In Place*. This is because we have already established a bunch of principles and agreed on the tools that we use for the work, and they are being used by the whole team to perform the work. We would regularly inspect if the rules or principles are followed and if not, we would make changes and make sure we abide by them. <br>
-But we are still not in the stage of *Working well* since we cannot naturally apply the practices without thinking about them. <br>
-We think the obstacles to reaching the next stage is time because it has not been a long time since the group was formed and principles were established. <br>
+Currently, we are in the stage of *In Place*. This is because we have already established a bunch of principles and agreed on the tools that we use for the work, and they are being used by the whole team to perform the work. We would regularly inspect if the rules or principles are followed and if not, we would make changes and make sure we abide by them.
+
+But we are still not in the stage of *Working well* since we cannot naturally apply the practices without thinking about them.
+
+We think the obstacles to reaching the next stage is time because it has not been a long time since the group was formed and principles were established.
 
 ## Contributions
 
-#### Tobias Gabi Goobar:
+### Tobias Gabi Goobar:
 Implemented
 - LIC0
 - LIC2
@@ -57,7 +59,7 @@ Implemented
 
 along with corresponding unit tests.
 
-#### Filip Bäck
+### Filip Bäck
 Implemented
 - LIC3
 - LIC5
@@ -67,7 +69,7 @@ Implemented
 
 along with corresponding unit tests.
 
-#### Siyao Liu
+### Siyao Liu
 Implemented
 - LIC1
 - LIC4
@@ -77,7 +79,7 @@ Implemented
 
 along with corresponding unit tests.
 
-#### Edwin So
+### Edwin So
 Designed
 - Code structure and code skeleton
 
